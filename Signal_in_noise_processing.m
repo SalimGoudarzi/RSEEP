@@ -1,0 +1,12 @@
+function xf = Signal_in_noise_processing(PET)
+X_noise     = fft(PET);
+shift       = fftshift(X_noise);
+SHIFT       = 0*shift;
+[~,Locs]    = sort(shift,'descend');
+Nfreqs      = 3;
+d           = 0;
+Vec         = min(Locs(1:Nfreqs))-d:max(Locs(1:Nfreqs))+d;
+SHIFT(Vec)  = shift(Vec);
+xf          = ifft(ifftshift(SHIFT));
+xf          = real(xf);
+xf          = xf-min(xf);
